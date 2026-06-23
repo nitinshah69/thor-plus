@@ -27,6 +27,18 @@ export default function Order() {
       return;
     }
     
+    // Save order to localStorage for the Admin panel
+    const newOrder = {
+      id: "ORD-" + Math.floor(Math.random() * 1000000),
+      ...formData,
+      date: new Date().toISOString(),
+      status: "Pending",
+      total: "₹2,999"
+    };
+    
+    const existingOrders = JSON.parse(localStorage.getItem('ayurpeak_orders') || '[]');
+    localStorage.setItem('ayurpeak_orders', JSON.stringify([newOrder, ...existingOrders]));
+    
     const text = `*New Order: AyurPeak Power Plus*
 Name: ${formData.firstName} ${formData.lastName}
 Email: ${formData.email}

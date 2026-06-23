@@ -7,6 +7,7 @@ import About from '../pages/About';
 import Contact from '../pages/Contact';
 import FAQ from '../pages/FAQ';
 import Order from '../pages/Order';
+import Admin from '../pages/Admin';
 
 export default function AnimatedRoutes() {
   const location = useLocation();
@@ -24,6 +25,7 @@ export default function AnimatedRoutes() {
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/order" element={<Order />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </AnimatePresence>
   );
