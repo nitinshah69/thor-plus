@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Dna, ShoppingCart, User, Search, MessageSquare, Globe } from 'lucide-react';
 import WhatsAppPopup from './WhatsAppPopup';
+import OfferBanner from './OfferBanner';
 import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -12,6 +13,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex flex-col min-h-screen">
+      {/* Offer Countdown Banner */}
+      <OfferBanner />
+
       {/* Top Navigation Bar */}
       <header className="bg-surface sticky top-0 z-50 border-b border-outline-variant">
         <div className="flex justify-between items-center h-20 px-container-padding w-full max-w-7xl mx-auto flex-wrap md:flex-nowrap">
@@ -20,7 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div className="bg-primary/10 p-2 rounded-xl group-hover:bg-primary/20 transition-colors">
                 <Dna className="w-8 h-8 text-primary group-hover:rotate-12 transition-transform duration-500" />
               </div>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-container">AYURPEAK</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-container">THOR PLUS</span>
             </div>
             <div className="hidden xl:block h-6 w-px bg-outline-variant mx-4"></div>
             <div className="hidden xl:block text-label-sm text-on-surface-variant opacity-70 uppercase tracking-wide">
@@ -29,9 +33,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </Link>
           
           <nav className="hidden lg:flex items-center gap-6">
-            <Link to="/" className={`text-label-sm uppercase tracking-widest transition-all relative group ${isActive('/') ? 'text-primary font-bold' : 'text-on-surface hover:text-primary'}`}>
+            <Link to="/product" className={`text-label-sm uppercase tracking-widest transition-all relative group ${isActive('/product') ? 'text-primary font-bold' : 'text-on-surface hover:text-primary'}`}>
               {t('products')}
-              <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-primary transition-transform duration-300 ${isActive('/') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
+              <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-primary transition-transform duration-300 ${isActive('/product') ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
             </Link>
             <Link to="/about" className={`text-label-sm uppercase tracking-widest transition-all relative group ${isActive('/about') ? 'text-primary font-bold' : 'text-on-surface hover:text-primary'}`}>
               {t('about')}

@@ -85,12 +85,14 @@ export default function Home() {
           <div className="relative flex justify-center lg:justify-end">
             <div className="absolute -z-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl opacity-50"></div>
             <div className="relative z-10 w-full max-w-md clinical-card p-6 rounded-xl shadow-lg border-primary/10 bg-surface-container-lowest">
-              <img 
-                className="w-full h-auto object-contain cursor-pointer transition-transform hover:scale-105 duration-500" 
-                alt="Professional studio photograph of the supplement bottle." 
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0pywMSyjWb3k4UbAEidT9IRDrVC5Q9TbhQRHy2p97G_e3ELUDdLYY1dID1AExSmGb0MLxDzapRvOb4-cgIvQ2kApHVqs0zd-4H8q1w95yxdg-OuiTAVpehtZNZAY3kF2ypT79kvPmTBH_VSS9iuLiKul5KtQWav6xrtF_mWyeSOZQgMXeINvVUfBrVetD9DmLNzxHzj5R0id6vqp-t3G92i5lomeDyFOVqhp7P2jm4SG0zyYSLD0slPtnEvhOTghWRqBXqf_98JeZ" 
-                referrerPolicy="no-referrer"
-              />
+              <Link to="/product" className="block cursor-pointer">
+                <img 
+                  className="w-full h-auto object-contain transition-transform hover:scale-105 duration-500" 
+                  alt="Professional studio photograph of the supplement bottle." 
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0pywMSyjWb3k4UbAEidT9IRDrVC5Q9TbhQRHy2p97G_e3ELUDdLYY1dID1AExSmGb0MLxDzapRvOb4-cgIvQ2kApHVqs0zd-4H8q1w95yxdg-OuiTAVpehtZNZAY3kF2ypT79kvPmTBH_VSS9iuLiKul5KtQWav6xrtF_mWyeSOZQgMXeINvVUfBrVetD9DmLNzxHzj5R0id6vqp-t3G92i5lomeDyFOVqhp7P2jm4SG0zyYSLD0slPtnEvhOTghWRqBXqf_98JeZ" 
+                  referrerPolicy="no-referrer"
+                />
+              </Link>
               <div className="mt-6 flex justify-between items-center px-2">
                 <div>
                   <h3 className="text-xl font-bold text-primary">{t('cardTitle', 'hero')}</h3>
@@ -137,11 +139,11 @@ export default function Home() {
 
             {/* Collage Item 3: The Bottle */}
             <div className="flex flex-col gap-4 lg:gap-6 -mt-8 lg:-mt-16 z-20">
-              <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-2xl relative bg-gradient-to-b from-surface-container-lowest to-surface-container p-4 lg:p-6 flex flex-col items-center justify-center border border-primary/20">
+              <Link to="/product" className="rounded-2xl overflow-hidden aspect-[3/4] shadow-2xl relative bg-gradient-to-b from-surface-container-lowest to-surface-container p-4 lg:p-6 flex flex-col items-center justify-center border border-primary/20 group cursor-pointer hover:shadow-primary/20 transition-all">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl"></div>
                 <div className="absolute bottom-0 left-0 w-32 h-32 bg-secondary/10 rounded-full blur-2xl"></div>
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0pywMSyjWb3k4UbAEidT9IRDrVC5Q9TbhQRHy2p97G_e3ELUDdLYY1dID1AExSmGb0MLxDzapRvOb4-cgIvQ2kApHVqs0zd-4H8q1w95yxdg-OuiTAVpehtZNZAY3kF2ypT79kvPmTBH_VSS9iuLiKul5KtQWav6xrtF_mWyeSOZQgMXeINvVUfBrVetD9DmLNzxHzj5R0id6vqp-t3G92i5lomeDyFOVqhp7P2jm4SG0zyYSLD0slPtnEvhOTghWRqBXqf_98JeZ" alt="AyurPeak Bottle" className="w-full h-auto object-contain z-10 transform hover:scale-105 transition-transform" />
-              </div>
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0pywMSyjWb3k4UbAEidT9IRDrVC5Q9TbhQRHy2p97G_e3ELUDdLYY1dID1AExSmGb0MLxDzapRvOb4-cgIvQ2kApHVqs0zd-4H8q1w95yxdg-OuiTAVpehtZNZAY3kF2ypT79kvPmTBH_VSS9iuLiKul5KtQWav6xrtF_mWyeSOZQgMXeINvVUfBrVetD9DmLNzxHzj5R0id6vqp-t3G92i5lomeDyFOVqhp7P2jm4SG0zyYSLD0slPtnEvhOTghWRqBXqf_98JeZ" alt="AyurPeak Bottle" className="w-full h-auto object-contain z-10 transform group-hover:scale-105 transition-transform" />
+              </Link>
               <div className="bg-primary text-on-primary p-3 lg:p-4 rounded-xl text-center shadow-lg">
                 <span className="text-[10px] lg:text-xs uppercase tracking-widest font-bold">Premium Grade</span>
               </div>
