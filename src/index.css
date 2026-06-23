@@ -30,11 +30,18 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   
   --spacing-base: 8px;
-  --spacing-container-padding: 24px;
+  --spacing-container-padding: 16px;
   --spacing-gutter: 16px;
-  --spacing-section-gap: 40px;
+  --spacing-section-gap: 32px;
   --spacing-stack-sm: 4px;
   --spacing-stack-md: 12px;
+}
+
+@media (min-width: 768px) {
+  @theme {
+    --spacing-container-padding: 32px;
+    --spacing-section-gap: 64px;
+  }
 }
 
 @layer utilities {
