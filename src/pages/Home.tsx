@@ -214,32 +214,52 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex flex-col items-center text-center p-6 hover:-translate-y-2 transition-transform duration-300">
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 border border-primary/20">
-                <Beaker className="w-8 h-8 text-primary" />
+            <div className="flex flex-col bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/50 hover:shadow-xl transition-all duration-300 group hover:-translate-y-2">
+              <div className="h-48 overflow-hidden relative">
+                <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none"></div>
+                <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&q=80" alt="Clinical Science" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
               </div>
-              <h3 className="text-title-lg font-bold mb-3">{t('f1Title', 'why')}</h3>
-              <p className="text-body-md text-on-surface-variant leading-relaxed">
-                {t('f1Desc', 'why')}
-              </p>
+              <div className="p-8 flex flex-col items-center text-center relative">
+                <div className="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center -mt-16 mb-4 relative z-20 border-4 border-surface shadow-md">
+                  <Beaker className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="text-title-lg font-bold mb-3">{t('f1Title', 'why')}</h3>
+                <p className="text-body-md text-on-surface-variant leading-relaxed">
+                  {t('f1Desc', 'why')}
+                </p>
+              </div>
             </div>
-            <div className="flex flex-col items-center text-center p-6 hover:-translate-y-2 transition-transform duration-300">
-              <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mb-6 border border-secondary/20">
-                <Leaf className="w-8 h-8 text-secondary" />
+            
+            <div className="flex flex-col bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/50 hover:shadow-xl transition-all duration-300 group hover:-translate-y-2">
+              <div className="h-48 overflow-hidden relative">
+                <div className="absolute inset-0 bg-secondary/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none"></div>
+                <img src="https://images.unsplash.com/photo-1512069772995-ec65ed45afd6?auto=format&fit=crop&q=80" alt="Natural Ingredients" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
               </div>
-              <h3 className="text-title-lg font-bold mb-3">{t('f2Title', 'why')}</h3>
-              <p className="text-body-md text-on-surface-variant leading-relaxed">
-                {t('f2Desc', 'why')}
-              </p>
+              <div className="p-8 flex flex-col items-center text-center relative">
+                <div className="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center -mt-16 mb-4 relative z-20 border-4 border-surface shadow-md">
+                  <Leaf className="w-8 h-8 text-secondary" />
+                </div>
+                <h3 className="text-title-lg font-bold mb-3">{t('f2Title', 'why')}</h3>
+                <p className="text-body-md text-on-surface-variant leading-relaxed">
+                  {t('f2Desc', 'why')}
+                </p>
+              </div>
             </div>
-            <div className="flex flex-col items-center text-center p-6 hover:-translate-y-2 transition-transform duration-300">
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-6 border border-primary/20">
-                <Target className="w-8 h-8 text-primary" />
+            
+            <div className="flex flex-col bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/50 hover:shadow-xl transition-all duration-300 group hover:-translate-y-2">
+              <div className="h-48 overflow-hidden relative">
+                <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none"></div>
+                <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80" alt="Peak Performance" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
               </div>
-              <h3 className="text-title-lg font-bold mb-3">{t('f3Title', 'why')}</h3>
-              <p className="text-body-md text-on-surface-variant leading-relaxed">
-                {t('f3Desc', 'why')}
-              </p>
+              <div className="p-8 flex flex-col items-center text-center relative">
+                <div className="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center -mt-16 mb-4 relative z-20 border-4 border-surface shadow-md">
+                  <Target className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="text-title-lg font-bold mb-3">{t('f3Title', 'why')}</h3>
+                <p className="text-body-md text-on-surface-variant leading-relaxed">
+                  {t('f3Desc', 'why')}
+                </p>
+              </div>
             </div>
           </div>
         </div>
