@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import PageTransition from '../components/PageTransition';
-import { Package, Users, DollarSign, Clock, Search, Filter, ChevronRight, CheckCircle, XCircle } from 'lucide-react';
+import { Package, Users, DollarSign, Clock, Search, Filter, Trash2, CheckCircle, XCircle, Download, LockKeyhole } from 'lucide-react';
 
 interface Order {
   id: string;
@@ -17,14 +17,45 @@ interface Order {
 }
 
 export default function Admin() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+
   const [orders, setOrders] = useState<Order[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Check authentication status on load
   useEffect(() => {
-    // Load orders from localStorage
-    const savedOrders = JSON.parse(localStorage.getItem('ayurpeak_orders') || '[]');
-    setOrders(savedOrders);
+    const authStatus = localStorage.getItem('ayurpeak_admin_auth');
+    if (authStatus === 'true') {
+      setIsAuthenticated(true);
+    }
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const savedOrders = JSON.parse(localStorage.getItem('ayurpeak_orders') || '[]');
+      setOrders(savedOrders);
+    }
+  }, [isAuthenticated]);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simple mock authentication
+    if (loginEmail === 'admin@gmail.com' && loginPassword === 'password123') {
+      setIsAuthenticated(true);
+      localStorage.setItem('ayurpeak_admin_auth', 'true');
+      setLoginError('');
+    } else {
+      setLoginError('Invalid credentials. Please try again.');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem('ayurpeak_admin_auth');
+  };
 
   const updateStatus = (id: string, newStatus: string) => {
     const updatedOrders = orders.map(order => 
@@ -34,11 +65,87 @@ export default function Admin() {
     localStorage.setItem('ayurpeak_orders', JSON.stringify(updatedOrders));
   };
 
+  const deleteOrder = (id: string) => {
+    if (window.confirm('Are you sure you want to delete this order?')) {
+      const updatedOrders = orders.filter(order => order.id !== id);
+      setOrders(updatedOrders);
+      localStorage.setItem('ayurpeak_orders', JSON.stringify(updatedOrders));
+    }
+  };
+
+  const exportCSV = () => {
+    const headers = ['Order ID', 'Customer Name', 'Email', 'Address', 'City', 'Date', 'Status', 'Total'];
+    const csvContent = [
+      headers.join(','),
+      ...orders.map(o => `"${o.id}","${o.firstName} ${o.lastName}","${o.email}","${o.address}","${o.city}","${new Date(o.date).toLocaleDateString()}","${o.status}","${o.total}"`)
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `ayurpeak_orders_${new Date().toLocaleDateString()}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const filteredOrders = orders.filter(order => 
     order.id.toLowerCase().includes(searchTerm.toLowerCase()) || 
     order.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     order.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  if (!isAuthenticated) {
+    return (
+      <PageTransition>
+        <div className="min-h-screen bg-surface-container flex items-center justify-center p-4">
+          <div className="bg-surface p-8 rounded-2xl shadow-xl border border-outline-variant w-full max-w-md">
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <LockKeyhole className="w-8 h-8 text-primary" />
+            </div>
+            <h1 className="text-display-sm text-center text-on-surface mb-2">Admin Access</h1>
+            <p className="text-center text-on-surface-variant mb-8 text-sm">Secure Portal for AyurPeak Team</p>
+            
+            {loginError && (
+              <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg border border-red-200 mb-6 text-center">
+                {loginError}
+              </div>
+            )}
+            
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label className="text-label-sm uppercase tracking-widest text-on-surface-variant mb-1 block">Email Address</label>
+                <input 
+                  type="email" 
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                  placeholder="admin@gmail.com" 
+                  className="w-full bg-surface-container-low p-4 rounded-lg border border-outline-variant focus:border-primary outline-none transition-colors"
+                  required
+                />
+              </div>
+              <div>
+                <label className="text-label-sm uppercase tracking-widest text-on-surface-variant mb-1 block">Password</label>
+                <input 
+                  type="password" 
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  placeholder="••••••••" 
+                  className="w-full bg-surface-container-low p-4 rounded-lg border border-outline-variant focus:border-primary outline-none transition-colors"
+                  required
+                />
+              </div>
+              <button type="submit" className="w-full bg-primary text-on-primary h-14 rounded-lg uppercase tracking-widest text-sm font-bold shadow-md hover:opacity-90 transition-opacity mt-4">
+                Login to Dashboard
+              </button>
+            </form>
+          </div>
+        </div>
+      </PageTransition>
+    );
+  }
 
   return (
     <PageTransition>
@@ -50,9 +157,14 @@ export default function Admin() {
               <h1 className="text-display-sm font-bold tracking-tight">Admin Dashboard</h1>
               <p className="text-on-primary/80 text-body-md mt-1">Manage orders and customer data securely.</p>
             </div>
-            <div className="bg-white/10 px-4 py-2 rounded-lg flex items-center gap-2 backdrop-blur-sm border border-white/20">
-              <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse"></span>
-              <span className="text-sm font-medium tracking-wide">System Online</span>
+            <div className="flex items-center gap-4">
+              <div className="bg-white/10 px-4 py-2 rounded-lg flex items-center gap-2 backdrop-blur-sm border border-white/20">
+                <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse"></span>
+                <span className="text-sm font-medium tracking-wide hidden sm:inline">System Online</span>
+              </div>
+              <button onClick={handleLogout} className="bg-white/10 hover:bg-white/20 transition-colors px-4 py-2 rounded-lg text-sm font-medium border border-white/20">
+                Logout
+              </button>
             </div>
           </div>
         </div>
@@ -102,8 +214,8 @@ export default function Admin() {
           <div className="bg-surface rounded-xl shadow-sm border border-outline-variant overflow-hidden">
             <div className="p-6 border-b border-outline-variant flex flex-col sm:flex-row justify-between items-center gap-4">
               <h2 className="text-title-lg font-bold text-on-surface">Recent Orders</h2>
-              <div className="flex gap-4 w-full sm:w-auto">
-                <div className="relative flex-1 sm:w-64">
+              <div className="flex flex-wrap gap-4 w-full sm:w-auto">
+                <div className="relative flex-1 sm:w-64 min-w-[200px]">
                   <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" />
                   <input 
                     type="text" 
@@ -113,8 +225,12 @@ export default function Admin() {
                     className="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg focus:outline-none focus:border-primary transition-colors text-sm"
                   />
                 </div>
-                <button className="p-2 border border-outline-variant rounded-lg hover:bg-surface-container transition-colors flex items-center gap-2 text-sm text-on-surface-variant">
-                  <Filter className="w-4 h-4" /> Filter
+                <button 
+                  onClick={exportCSV}
+                  disabled={orders.length === 0}
+                  className="px-4 py-2 bg-surface-container border border-outline-variant rounded-lg hover:bg-surface-container-high hover:border-primary transition-colors flex items-center gap-2 text-sm text-on-surface disabled:opacity-50 font-medium"
+                >
+                  <Download className="w-4 h-4" /> Export CSV
                 </button>
               </div>
             </div>
@@ -135,8 +251,11 @@ export default function Admin() {
                 <tbody>
                   {filteredOrders.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="p-8 text-center text-on-surface-variant">
-                        No orders found. Once users check out, their data will appear here.
+                      <td colSpan={7} className="p-12 text-center text-on-surface-variant">
+                        <div className="flex flex-col items-center gap-3">
+                          <Package className="w-12 h-12 text-outline" />
+                          <p>No orders found. Once users check out, their data will appear here.</p>
+                        </div>
                       </td>
                     </tr>
                   ) : (
@@ -161,8 +280,8 @@ export default function Admin() {
                           {new Date(order.date).toLocaleDateString()}
                         </td>
                         <td className="p-4">
-                          <span className={`px-3 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1 ${
-                            order.status === 'Completed' ? 'bg-green-100 text-green-700' :
+                          <span className={`px-3 py-1 rounded-full text-[11px] font-bold inline-flex items-center gap-1 uppercase tracking-wider ${
+                            order.status === 'Completed' ? 'bg-[#DCF8C6] text-[#075E54]' :
                             order.status === 'Cancelled' ? 'bg-red-100 text-red-700' :
                             'bg-orange-100 text-orange-700'
                           }`}>
@@ -174,17 +293,21 @@ export default function Admin() {
                         </td>
                         <td className="p-4 font-bold text-on-surface">{order.total}</td>
                         <td className="p-4">
-                          <div className="flex items-center justify-center gap-2">
+                          <div className="flex items-center justify-center gap-3">
                             {order.status === 'Pending' && (
                               <button 
                                 onClick={() => updateStatus(order.id, 'Completed')}
-                                className="text-xs bg-[#25D366] text-white px-3 py-1 rounded hover:bg-[#20BE5C] transition-colors font-bold"
+                                className="text-xs bg-[#25D366] text-white px-3 py-1.5 rounded shadow-sm hover:bg-[#20BE5C] active:scale-95 transition-all font-bold"
                               >
                                 Complete
                               </button>
                             )}
-                            <button className="p-1 text-on-surface-variant hover:text-primary transition-colors">
-                              <ChevronRight className="w-5 h-5" />
+                            <button 
+                              onClick={() => deleteOrder(order.id)}
+                              className="p-1.5 text-on-surface-variant hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+                              title="Delete Order"
+                            >
+                              <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
                         </td>

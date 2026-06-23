@@ -108,15 +108,45 @@ Hello! I would like to place my order and proceed with the payment.`;
 
             {/* Step 2: Review/Confirmation */}
             {step === 2 && (
-              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6 text-center py-12">
-                <CheckCircle className="w-20 h-20 text-[#25D366] mx-auto mb-6" />
-                <h2 className="text-headline-lg text-on-surface">{t('orderSent', 'order')}</h2>
-                <p className="text-body-md text-on-surface-variant max-w-md mx-auto">
-                  {t('orderSentDesc', 'order')}
-                </p>
-                <Link to="/" className="inline-block mt-8 bg-primary text-on-primary px-8 h-12 leading-[48px] text-label-sm uppercase tracking-widest font-bold hover:opacity-90 transition-all">
-                  {t('returnHome', 'order')}
-                </Link>
+              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-6">
+                <div className="bg-surface-container-lowest p-8 md:p-12 text-center rounded-2xl border border-outline-variant shadow-lg relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-2 bg-[#25D366]"></div>
+                  
+                  <div className="w-24 h-24 bg-[#25D366]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle className="w-12 h-12 text-[#25D366]" />
+                  </div>
+                  
+                  <h2 className="text-display-sm text-on-surface mb-2 font-display">{t('orderSent', 'order')}</h2>
+                  <p className="text-body-lg text-on-surface-variant max-w-md mx-auto mb-8">
+                    {t('orderSentDesc', 'order')}
+                  </p>
+                  
+                  <div className="bg-surface-container-low p-6 rounded-xl border border-outline-variant/50 text-left max-w-sm mx-auto mb-8 shadow-sm">
+                    <p className="text-label-sm uppercase tracking-widest text-on-surface-variant mb-4 border-b border-outline-variant/30 pb-2">Order Receipt</p>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-on-surface-variant">Customer:</span>
+                        <span className="font-bold text-on-surface">{formData.firstName} {formData.lastName}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-on-surface-variant">Email:</span>
+                        <span className="font-bold text-on-surface">{formData.email}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-on-surface-variant">Shipping To:</span>
+                        <span className="font-bold text-on-surface text-right">{formData.city}<br/>{formData.postalCode}</span>
+                      </div>
+                      <div className="flex justify-between border-t border-outline-variant/30 pt-3 mt-3">
+                        <span className="text-on-surface-variant">Total Paid:</span>
+                        <span className="font-bold text-primary text-base">₹2,999</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Link to="/" className="inline-block bg-primary text-on-primary px-10 h-14 leading-[56px] text-label-sm uppercase tracking-widest font-bold hover:bg-primary/90 hover:shadow-lg transition-all rounded shadow-md">
+                    {t('returnHome', 'order')}
+                  </Link>
+                </div>
               </motion.div>
             )}
           </div>
