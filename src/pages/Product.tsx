@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star, ShoppingBag, Headset, CheckCircle, ClipboardList, TrendingUp, ArrowRight, MessageCircle, Shield, Zap } from 'lucide-react';
+import { Star, ShoppingBag, Headset, CheckCircle, ClipboardList, TrendingUp, ArrowRight, MessageCircle, Shield, Zap, Timer } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PageTransition from '../components/PageTransition';
 import { motion } from 'motion/react';
@@ -11,7 +11,23 @@ export default function Product() {
   const [activeImage, setActiveImage] = useState(
     "https://lh3.googleusercontent.com/aida-public/AB6AXuAlAc-dmCHqZiqr48ySP9nF0pu2DKkE-706iltkxfsX9aQTivEfY4fWOjpgaiQCFno33XgAM6guyTkULB41UCAflkUBjqM0_lkk8YyZLFA4keTohJi2DnZihgY93aJ1HnlRvCRrV-aQsU31Xnh3GhmkTjFrUn9K1464E4NbXIB_8UJ5027lpkaIt94WivHFwVuFYQeiOhUXdpz2Y59PoO25ds0vpEkr6-vxGM7iHOtgJVKS_hIRiYGcj5L6-kart86PJkon_1yjnstU"
   );
+
+  const [timeLeft, setTimeLeft] = useState({ hours: 4, minutes: 59, seconds: 59 });
   
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
+        if (prev.minutes > 0) return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        if (prev.hours > 0) return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        return prev;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+  
+  const formatTime = (v: number) => v.toString().padStart(2, '0');
+
   const thumbnails = [
     "https://lh3.googleusercontent.com/aida-public/AB6AXuAX-zuLuU_53eMxZKRosOUo1xMz41HXNCkVQVsogS_Rzc3FJZU7MKVRDNMlkz18TPsNchfojiSm3ovSTv3uhRS6gB6_0TVnbm5IpoXhPb5mc881ZgVLJJ2xNi0Q4D8X2mBMHt8SJMRd5ypWMjxQTl0ONa7inuEqIBTLrInFtBx_L3apS-I0IiWehdkGnFs4SGtMkj4uWmyiRZKuIUyoPdHK2tm7Ayencat408GHFcqFs6eGdGBDsp47mZk7Mh7jmxMTeXGX5igDek4q",
     "https://lh3.googleusercontent.com/aida-public/AB6AXuCPDqqLENIm-8RPQqbmXWraFuoexURTSCgGkn3SP4VPTPwe-7idELRV-8iRSmM3JjHBZ-K2MP-tq7rrbTyhsBPPTaqw4xgDoseLdXx6bEeLtBXtiliiCUMDp-5FKlZyirmb9DLKvbGrqALDnvGi3s4Wg81XV6g9vNX9UaryeBCIyydgR3ePdyV-Y_gupWw85YXEa-2iPxvQLYlkRqxk3HsTT2E7dy0YhuQD8V1Lcn81f_gDI8DpkNqkPZjjhu9K_8-0biT51RPu3yZ6",
@@ -94,6 +110,25 @@ export default function Product() {
             <div className="text-right">
               <p className="text-label-sm text-secondary uppercase font-bold">{t('stock', 'product')}</p>
               <p className="text-[10px] text-on-surface-variant">{t('shipping', 'product')}</p>
+            </div>
+          </div>
+
+          {/* Inline Checkout Offer Countdown */}
+          <div className="bg-secondary/10 border border-secondary/30 p-4 rounded-lg flex items-center justify-between mt-2 shadow-sm relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+            <div className="flex items-center gap-3">
+              <Timer className="w-5 h-5 text-secondary animate-pulse" />
+              <div className="flex flex-col">
+                <span className="font-bold text-sm text-secondary uppercase tracking-wider">Flash Sale</span>
+                <span className="text-xs text-on-surface-variant font-medium">Extra 40% Off Ends In:</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-1 font-mono font-bold text-lg bg-white px-3 py-1.5 rounded-md shadow-sm border border-outline-variant/50 text-primary">
+              <span>{formatTime(timeLeft.hours)}</span>
+              <span className="opacity-50 animate-pulse">:</span>
+              <span>{formatTime(timeLeft.minutes)}</span>
+              <span className="opacity-50 animate-pulse">:</span>
+              <span className="text-secondary">{formatTime(timeLeft.seconds)}</span>
             </div>
           </div>
           

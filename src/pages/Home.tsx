@@ -305,9 +305,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-container-padding">
           <div className="flex flex-col lg:flex-row gap-16 items-center">
             <div className="lg:w-1/2">
-              <div className="relative rounded-2xl overflow-hidden aspect-square md:aspect-video lg:aspect-square clinical-card">
-                 <img className="absolute inset-0 w-full h-full object-cover" alt="Man with healthy lifestyle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz5YC-vfwubdXkhXBZmxdIWBgp1SESqJTyQixeX8E0OEQcSVe86Uy4n3fqmYHp4Yx6NoD54nPSnJoTjv4QSYUhCumVn_ytn9AX7ur4VwBC0Ok0V0nVgFq_FuyFnOgU_WORV-rblNSUxCYwXxplJt8AaSj5emTR5GPYWi1l7HEwiBpV-xOjz5UauvW-8iIAXb93At_LM0AsLU8gOAkOJIxokyDvyardDnIgc8NpECTQQEJq2ntGC0dbPwLYdLgWGhwdLsW7js0Xm_ve" referrerPolicy="no-referrer" />
-              </div>
+              <Link to="/product" className="relative rounded-2xl overflow-hidden aspect-square md:aspect-video lg:aspect-square clinical-card block cursor-pointer group">
+                 <img className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" alt="Man with healthy lifestyle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz5YC-vfwubdXkhXBZmxdIWBgp1SESqJTyQixeX8E0OEQcSVe86Uy4n3fqmYHp4Yx6NoD54nPSnJoTjv4QSYUhCumVn_ytn9AX7ur4VwBC0Ok0V0nVgFq_FuyFnOgU_WORV-rblNSUxCYwXxplJt8AaSj5emTR5GPYWi1l7HEwiBpV-xOjz5UauvW-8iIAXb93At_LM0AsLU8gOAkOJIxokyDvyardDnIgc8NpECTQQEJq2ntGC0dbPwLYdLgWGhwdLsW7js0Xm_ve" referrerPolicy="no-referrer" />
+                 <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="bg-primary text-on-primary px-6 py-3 rounded-full font-bold uppercase tracking-widest text-sm shadow-xl translate-y-4 group-hover:translate-y-0 transition-all duration-300">View Product</span>
+                 </div>
+              </Link>
             </div>
             <div className="lg:w-1/2">
               <h2 className="text-headline-lg mb-8">{t('title', 'howitworks')}</h2>
